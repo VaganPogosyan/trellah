@@ -6,3 +6,4 @@ venv/
 *.env.*
 !backend/.env.example
 .DS_Store
+frontend/src/routeTree.gen.ts

@@ -16,14 +16,18 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 @router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 def register_user(payload: UserCreate, db: Session = Depends(get_db)) -> UserRead:
     normalized_email = payload.email.lower()
-    existing_user = db.execute(select(User).where(User.email == normalized_email)).scalar_one_or_none()
+    existing_user = db.execute(
+        select(User).where(User.email == normalized_email)
+    ).scalar_one_or_none()
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered",
         )
 
-    user = User(email=normalized_email, hashed_password=get_password_hash(payload.password))
+    user = User(
+        email=normalized_email, hashed_password=get_password_hash(payload.password)
+    )
     db.add(user)
     db.commit()
     db.refresh(user)
@@ -36,7 +40,9 @@ def login_for_access_token(
     db: Session = Depends(get_db),
 ) -> Token:
     normalized_email = form_data.username.lower()
-    user = db.execute(select(User).where(User.email == normalized_email)).scalar_one_or_none()
+    user = db.execute(
+        select(User).where(User.email == normalized_email)
+    ).scalar_one_or_none()
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

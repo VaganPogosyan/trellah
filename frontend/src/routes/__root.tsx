@@ -5,7 +5,9 @@ import {
   createRootRoute,
   HeadContent,
   Scripts,
+  Link,
 } from "@tanstack/react-router";
+import appCss from "../styles/app.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -21,6 +23,7 @@ export const Route = createRootRoute({
         title: "TanStack Start Starter",
       },
     ],
+    links: [{ rel: "stylesheet", href: appCss }],
   }),
   component: RootComponent,
 });
@@ -40,6 +43,66 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
+        <div className="p-2 flex gap-2 text-lg">
+          <Link
+            to="/"
+            activeProps={{
+              className: "font-bold",
+            }}
+            activeOptions={{ exact: true }}
+          >
+            Home
+          </Link>{" "}
+          <Link
+            to="/dashboard"
+            activeProps={{
+              className: "font-bold",
+            }}
+          >
+            Posts
+          </Link>{" "}
+          {/* <Link
+            to="/users"
+            activeProps={{
+              className: "font-bold",
+            }}
+          >
+            Users
+          </Link>{" "} */}
+          <Link
+            to="/auth"
+            activeProps={{
+              className: "font-bold",
+            }}
+          >
+            Auth
+          </Link>{" "}
+          {/* <Link
+            to="/route-a"
+            activeProps={{
+              className: "font-bold",
+            }}
+          >
+            Pathless Layout
+          </Link>{" "}
+          <Link
+            to="/deferred"
+            activeProps={{
+              className: "font-bold",
+            }}
+          >
+            Deferred
+          </Link>{" "}
+          <Link
+            // @ts-expect-error
+            to="/this-route-does-not-exist"
+            activeProps={{
+              className: "font-bold",
+            }}
+          >
+            This Route Does Not Exist
+          </Link> */}
+        </div>
         {children}
         <Scripts />
       </body>
