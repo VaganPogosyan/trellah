@@ -15,7 +15,7 @@ export function storeAuthSession(payload: LoginResponse) {
   window.localStorage.setItem(ACCESS_TOKEN_KEY, payload.access_token);
   window.localStorage.setItem(
     TOKEN_EXPIRES_AT_KEY,
-    new Date(payload.expires_at).toISOString(),
+    new Date(payload.expires_at).toISOString()
   );
 }
 

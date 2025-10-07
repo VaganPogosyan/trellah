@@ -1,5 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { clearAuthSession, isAuthSessionValid } from "../utils/auth";
+import Dashboard from "../components/Dashboard";
 
 export const Route = createFileRoute("/dashboard")({
   beforeLoad: () => {
@@ -10,11 +11,3 @@ export const Route = createFileRoute("/dashboard")({
   },
   component: Dashboard,
 });
-
-function Dashboard() {
-  return (
-    <div className="p-2">
-      <h3>Dashboard</h3>
-    </div>
-  );
-}

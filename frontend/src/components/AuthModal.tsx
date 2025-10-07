@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
   clearAuthSession,
@@ -105,6 +105,16 @@ export default function AuthModal() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [initializing, setInitializing] = useState(true);
+
+  useEffect(() => {
+    if (isAuthSessionValid()) {
+      navigate({ to: "/dashboard", replace: true });
+      return;
+    }
+
+    setInitializing(false);
+  }, [navigate]);
 
   const isSignUp = mode === "signup";
   const isLoading = status === "loading";
@@ -130,7 +140,7 @@ export default function AuthModal() {
 
         if (isAuthSessionValid()) {
           setStatus("success");
-          await navigate({ to: "/dashboard" });
+          await navigate({ to: "/dashboard", replace: true });
           return;
         }
 
@@ -156,6 +166,10 @@ export default function AuthModal() {
     setMessage("");
     setStatus("idle");
   };
+
+  if (initializing) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
@@ -261,7 +275,7 @@ export default function AuthModal() {
         <button
           type="submit"
           disabled={isLoading}
-          className="mt-6 flex w-full items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:bg-indigo-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+          className="mt-6 flex  w-full cursor-pointer items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:bg-indigo-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isLoading
             ? "Submitting..."
@@ -275,7 +289,7 @@ export default function AuthModal() {
           <button
             type="button"
             onClick={toggleMode}
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="font-medium cursor-pointer text-indigo-600 hover:text-indigo-500"
           >
             {isSignUp ? "Sign in" : "Sign up"}
           </button>

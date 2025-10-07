@@ -43,7 +43,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        <div className="p-2 flex gap-2 text-lg">
+        {/* <div className="p-2 flex gap-2 text-lg">
           <Link
             to="/"
             activeProps={{
@@ -61,14 +61,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           >
             Posts
           </Link>{" "}
-          {/* <Link
-            to="/users"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Users
-          </Link>{" "} */}
           <Link
             to="/auth"
             activeProps={{
@@ -76,22 +68,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
             }}
           >
             Auth
-          </Link>{" "}
-          {/* <Link
-            to="/route-a"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Pathless Layout
-          </Link>{" "}
-          <Link
-            to="/deferred"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Deferred
           </Link>{" "}
           <Link
             // @ts-expect-error
@@ -101,8 +77,8 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
             }}
           >
             This Route Does Not Exist
-          </Link> */}
-        </div>
+          </Link>
+        </div> */}
         {children}
         <Scripts />
       </body>
