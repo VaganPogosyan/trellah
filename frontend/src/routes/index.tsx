@@ -1,17 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-const API = import.meta.env.VITE_API_URL;
-
-console.log(API);
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { isAuthSessionValid } from "../utils/auth";
 
 export const Route = createFileRoute("/")({
-  component: Home,
+  beforeLoad: () => {
+    if (isAuthSessionValid()) {
+      throw redirect({ to: "/dashboard" });
+    }
+  },
 });
-
-function Home() {
-  return (
-    <div className="p-2">
-      <h3>Welcome Home!!!</h3>
-    </div>
-  );
-}

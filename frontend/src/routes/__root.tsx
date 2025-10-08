@@ -5,9 +5,10 @@ import {
   createRootRoute,
   HeadContent,
   Scripts,
-  Link,
 } from "@tanstack/react-router";
 import appCss from "../styles/app.css?url";
+import NavBar from "../components/NavBar";
+import { isAuthSessionValid } from "../utils/auth";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -42,44 +43,9 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <head>
         <HeadContent />
       </head>
-      <body>
-        {/* <div className="p-2 flex gap-2 text-lg">
-          <Link
-            to="/"
-            activeProps={{
-              className: "font-bold",
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>{" "}
-          <Link
-            to="/dashboard"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Posts
-          </Link>{" "}
-          <Link
-            to="/auth"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Auth
-          </Link>{" "}
-          <Link
-            // @ts-expect-error
-            to="/this-route-does-not-exist"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            This Route Does Not Exist
-          </Link>
-        </div> */}
-        {children}
+      <body className="bg-slate-50">
+        <NavBar />
+        <main className="pt-16">{children}</main>
         <Scripts />
       </body>
     </html>
