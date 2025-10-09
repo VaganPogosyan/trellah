@@ -6,6 +6,7 @@ import {
   storeAuthSession,
   type LoginResponse,
 } from "../utils/auth";
+import { useAuthStore } from "../stores.ts/authStore";
 
 type AuthMode = "signin" | "signup";
 type Status = "idle" | "loading" | "success" | "error";
@@ -98,6 +99,8 @@ function isLoginResponse(payload: AuthResponse): payload is LoginResponse {
 
 export default function AuthModal() {
   const navigate = useNavigate({ from: "/auth" });
+  const login = useAuthStore((state) => state.login);
+  const logout = useAuthStore((state) => state.logout);
   const [mode, setMode] = useState<AuthMode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -109,12 +112,14 @@ export default function AuthModal() {
 
   useEffect(() => {
     if (isAuthSessionValid()) {
+      login();
       navigate({ to: "/dashboard", replace: true });
       return;
     }
 
+    logout();
     setInitializing(false);
-  }, [navigate]);
+  }, [login, logout, navigate]);
 
   const isSignUp = mode === "signup";
   const isLoading = status === "loading";
@@ -137,6 +142,7 @@ export default function AuthModal() {
 
       if (isLoginResponse(response)) {
         storeAuthSession(response);
+        login();
 
         if (isAuthSessionValid()) {
           setStatus("success");
@@ -145,6 +151,7 @@ export default function AuthModal() {
         }
 
         clearAuthSession();
+        logout();
         setStatus("error");
         setError("Session expired immediately. Please sign in again.");
         return;
@@ -156,6 +163,7 @@ export default function AuthModal() {
       );
     } catch (err) {
       setStatus("error");
+      logout();
       setError(err instanceof Error ? err.message : "Unknown error occurred.");
     }
   };

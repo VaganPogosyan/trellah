@@ -1,10 +1,19 @@
 const ACCESS_TOKEN_KEY = "trellah_access_token";
 const TOKEN_EXPIRES_AT_KEY = "trellah_token_expires_at";
+export const AUTH_CHANGE_EVENT = "trellah-auth-change";
 
 export interface LoginResponse {
   access_token: string;
   token_type: string;
   expires_at: string;
+}
+
+function emitAuthChange() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.dispatchEvent(new Event(AUTH_CHANGE_EVENT));
 }
 
 export function storeAuthSession(payload: LoginResponse) {
@@ -17,6 +26,7 @@ export function storeAuthSession(payload: LoginResponse) {
     TOKEN_EXPIRES_AT_KEY,
     new Date(payload.expires_at).toISOString()
   );
+  emitAuthChange();
 }
 
 export function clearAuthSession() {
@@ -26,6 +36,7 @@ export function clearAuthSession() {
 
   window.localStorage.removeItem(ACCESS_TOKEN_KEY);
   window.localStorage.removeItem(TOKEN_EXPIRES_AT_KEY);
+  emitAuthChange();
 }
 
 function getStoredExpiry(): number | null {

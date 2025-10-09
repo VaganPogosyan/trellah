@@ -1,15 +1,25 @@
 import { Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { isAuthSessionValid } from "../utils/auth";
+import { useEffect } from "react";
+import { AUTH_CHANGE_EVENT } from "../utils/auth";
 import LogoutButton from "./LogoutButton";
+import { useAuthStore } from "../stores.ts/authStore";
 
 export default function NavBar() {
-  // const { data } = useQuery({
-  //   queryKey: ["check-auth"],
-  //   queryFn: isAuthSessionValid,
-  // });
+  const isAuthed = useAuthStore((state) => state.isAuthed);
+  const sync = useAuthStore((state) => state.sync);
 
-  const authed = isAuthSessionValid();
+  useEffect(() => {
+    const handleAuthChange = () => sync();
+
+    sync();
+    window.addEventListener(AUTH_CHANGE_EVENT, handleAuthChange);
+    window.addEventListener("storage", handleAuthChange);
+
+    return () => {
+      window.removeEventListener(AUTH_CHANGE_EVENT, handleAuthChange);
+      window.removeEventListener("storage", handleAuthChange);
+    };
+  }, [sync]);
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 shadow backdrop-blur">
@@ -18,7 +28,7 @@ export default function NavBar() {
           Trellah
         </Link>
         <nav className="flex items-center gap-3 text-sm font-medium text-slate-600">
-          {authed && (
+          {isAuthed && (
             <Link to="/dashboard" className="hover:text-indigo-500">
               Dashboard
             </Link>
@@ -30,7 +40,7 @@ export default function NavBar() {
           >
             Sample Board
           </Link> */}
-          {authed ? (
+          {isAuthed ? (
             <LogoutButton />
           ) : (
             <Link to="/auth" className="hover:text-indigo-500">

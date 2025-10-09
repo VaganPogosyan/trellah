@@ -1,13 +1,17 @@
 import { useNavigate } from "@tanstack/react-router";
 import { clearAuthSession } from "../utils/auth";
+import { useAuthStore } from "../stores.ts/authStore";
 
 export default function LogoutButton() {
-  const navigate = useNavigate({ from: "/dashboard" });
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
 
   const handleLogout = () => {
     clearAuthSession();
+    logout();
     navigate({ to: "/auth", replace: true });
   };
+
   return (
     <button
       type="button"
