@@ -1,4 +1,5 @@
 import BoardPreview, { type BoardInfo } from "./BoardPreview";
+import BoardPreview_CreateNew from "./BoardPreview_CreateNew";
 
 export default function BoardsList() {
   const boards: BoardInfo[] = [
@@ -30,6 +31,9 @@ export default function BoardsList() {
             <BoardPreview board={board} />
           </li>
         ))}
+        <li>
+          <BoardPreview_CreateNew />
+        </li>
       </ul>
     </div>
   );

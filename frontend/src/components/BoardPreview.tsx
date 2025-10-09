@@ -18,16 +18,16 @@ export default function BoardPreview({ board }: BoardPreviewProps) {
 
   return (
     <Link to="/boards/$boardId" params={{ boardId: id }}>
-      <div className="w-54 rounded-xl overflow-hidden bg-white shadow-md">
-        <div className="group cursor-pointer">
-          <div className="overflow-hidden">
+      <div className="group w-54 h-40 rounded-xl overflow-hidden bg-white shadow-md">
+        <div className="cursor-pointer  transition duration-200 group-hover:brightness-75">
+          <div className="overflow-hidden ">
             <img
-              className="h-24 w-full object-cover transition duration-200 group-hover:brightness-75"
+              className="h-24 w-full object-cover"
               src={imgSrc ?? FALLBACK_IMAGE}
               alt={`${title}-board-preview`}
             />
           </div>
-          <div className="flex w-full justify-start p-4">
+          <div className="flex w-full justify-start py-2 px-3">
             <h3 className="line-clamp-2 text-md font-normal text-gray-900">
               {title}
             </h3>

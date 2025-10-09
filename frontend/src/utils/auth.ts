@@ -76,3 +76,11 @@ export function isAuthSessionValid(): boolean {
 
   return true;
 }
+
+export function getAccessToken(): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return window.localStorage.getItem(ACCESS_TOKEN_KEY);
+}
