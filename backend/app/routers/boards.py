@@ -17,6 +17,7 @@ from app.schemas.board import (
     ColumnCreate,
     ColumnRead,
 )
+from app.dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/boards", tags=["boards"])
 
@@ -158,3 +159,21 @@ def create_card(
     db.commit()
     db.refresh(card)
     return CardRead.model_validate(card)
+
+
+# Get all Boards owned by the user
+@router.get(
+    "",
+    response_model=list[BoardRead],
+    status_code=status.HTTP_200_OK,
+)
+def list_owned_boards(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> list[BoardRead]:
+    boards = db.execute(
+        select(Board)
+        .where(Board.owner_id == current_user.id)
+        .order_by(Board.created_at)
+    ).scalars()
+    return [BoardRead.model_validate(board) for board in boards]

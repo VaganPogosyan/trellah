@@ -8,7 +8,9 @@ import {
 } from "@tanstack/react-router";
 import appCss from "../styles/app.css?url";
 import NavBar from "../components/NavBar";
-import { isAuthSessionValid } from "../utils/auth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export const Route = createRootRoute({
   head: () => ({
@@ -31,9 +33,11 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
+    <QueryClientProvider client={queryClient}>
+      <RootDocument>
+        <Outlet />
+      </RootDocument>
+    </QueryClientProvider>
   );
 }
 
