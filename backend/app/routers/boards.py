@@ -177,3 +177,26 @@ def list_owned_boards(
         .order_by(Board.created_at)
     ).scalars()
     return [BoardRead.model_validate(board) for board in boards]
+
+
+@router.get(
+    "/{board_id}",
+    response_model=BoardRead,
+    status_code=status.HTTP_200_OK,
+)
+def get_board_by_id(
+    board_id: UUID,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> BoardRead:
+    board = db.execute(
+        select(Board).where(Board.id == board_id, Board.owner_id == current_user.id)
+    ).scalar_one_or_none()
+
+    if not board:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Board not found.",
+        )
+
+    return BoardRead.model_validate(board)

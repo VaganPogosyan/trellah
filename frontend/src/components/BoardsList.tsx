@@ -65,7 +65,6 @@ export default function BoardsList() {
   }
 
   const boards = data;
-  console.log(boards);
 
   return (
     <div className="mx-auto">

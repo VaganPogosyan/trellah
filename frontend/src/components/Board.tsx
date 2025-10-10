@@ -1,5 +1,13 @@
 import Column from "./Column";
 
+interface BoardProps {
+  board: {
+    id: string;
+    name: string;
+    description?: string | null;
+  };
+}
+
 const mockColumns = [
   {
     id: "column-1",
@@ -36,17 +44,15 @@ const mockColumns = [
   },
 ];
 
-export default function Board() {
+export default function Board({ board }: BoardProps) {
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full overflow-hidden">
       <div className="flex items-center justify-between px-6 py-4">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">
-            Design Sprint
-          </h1>
-          <p className="text-sm text-slate-500">
-            A light Trellah board preview.
-          </p>
+          <h1 className="text-2xl font-semibold text-slate-900">{board.name}</h1>
+          {board.description ? (
+            <p className="text-sm text-slate-500">{board.description}</p>
+          ) : null}
         </div>
         <div className="flex gap-2 text-sm text-slate-600">
           <button
