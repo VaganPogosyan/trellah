@@ -35,6 +35,7 @@ def create_board(payload: BoardCreate, db: Session = Depends(get_db)) -> BoardRe
         name=payload.name,
         description=payload.description,
         owner_id=payload.owner_id,
+        image=payload.image,
     )
     db.add(board)
     db.flush()

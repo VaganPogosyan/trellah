@@ -22,8 +22,8 @@ export default function NavBar() {
   }, [sync]);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 shadow backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/95 shadow backdrop-blur">
+      <div className="mx-auto flex max-w-7xl items-center justify-between h-12">
         <Link to="/dashboard" className="text-lg font-semibold text-indigo-600">
           Trellah
         </Link>

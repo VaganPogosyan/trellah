@@ -9,6 +9,7 @@ class BoardCreate(BaseModel):
     name: str = Field(min_length=1, max_length=255)
     description: str | None = Field(default=None, max_length=2000)
     owner_id: UUID4
+    image: str | None = Field(default=None, max_length=255)
 
 
 class BoardRead(BaseModel):
@@ -18,6 +19,7 @@ class BoardRead(BaseModel):
     name: str
     description: str | None
     owner_id: UUID4
+    image: str | None
     created_at: datetime
 
 

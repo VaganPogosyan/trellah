@@ -23,7 +23,7 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "TanStack Start Starter",
+        title: "Trellah",
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -49,7 +49,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body className="bg-slate-50">
         <NavBar />
-        <main className="pt-16">{children}</main>
+        <main className="">{children}</main>
         <Scripts />
       </body>
     </html>

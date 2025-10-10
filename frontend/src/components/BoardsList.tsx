@@ -64,20 +64,26 @@ export default function BoardsList() {
     return <span>Error: {error.message}</span>;
   }
 
-  const boards = data;
+  const boards = data as BoardInfo[];
 
   return (
-    <div className="mx-auto">
-      <ul className="flex flex-wrap gap-4">
-        {boards.map((board: BoardInfo) => (
-          <li key={board.id}>
-            <BoardPreview board={board} />
+    <div className="mx-auto flex flex-col mt-20">
+      <h1 className="pb-4 pl-24 text-2xl font-semibold text-slate-900">
+        Your Boards
+      </h1>
+
+      <div className=" flex ">
+        <ul className="flex flex-wrap gap-4 pl-16">
+          {boards.map((board: BoardInfo) => (
+            <li key={board.id}>
+              <BoardPreview board={board} />
+            </li>
+          ))}
+          <li>
+            <BoardPreview_CreateNew />
           </li>
-        ))}
-        <li>
-          <BoardPreview_CreateNew />
-        </li>
-      </ul>
+        </ul>
+      </div>
     </div>
   );
 }

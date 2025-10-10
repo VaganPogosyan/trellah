@@ -11,6 +11,15 @@ interface CreateNewBoardModalProps {
   onCreated?: (boardId: string) => void;
 }
 
+const BACKGROUND_OPTIONS = [
+  "images/city_1",
+  "images/field_1",
+  "images/flowers_1",
+  "images/mountains_1",
+  "images/mountains_2",
+  "images/office_1",
+];
+
 export default function CreateNewBoardModal({
   open,
   onClose,
@@ -18,6 +27,7 @@ export default function CreateNewBoardModal({
 }: CreateNewBoardModalProps) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState(BACKGROUND_OPTIONS[0]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -64,6 +74,7 @@ export default function CreateNewBoardModal({
           name: name.trim(),
           description: description.trim() || null,
           owner_id: meData.id,
+          image: `${image}.jpg`,
         }),
       });
 
@@ -79,6 +90,7 @@ export default function CreateNewBoardModal({
       onClose();
       setName("");
       setDescription("");
+      setImage(BACKGROUND_OPTIONS[0]);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Unexpected error occurred."
@@ -136,6 +148,32 @@ export default function CreateNewBoardModal({
               placeholder="What is this board about?"
             />
           </label>
+
+          <fieldset className="space-y-2">
+            <legend className="text-left text-sm font-medium text-slate-700">
+              Background
+            </legend>
+            <div className="grid grid-cols-3 gap-3">
+              {BACKGROUND_OPTIONS.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setImage(option)}
+                  disabled={loading}
+                  className={`cursor-pointer relative block h-20 w-full overflow-hidden rounded-lg border-2 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed ${image === option ? "border-indigo-500" : "border-transparent"}`}
+                >
+                  <img
+                    src={`/${option}_low.jpg`}
+                    alt="Board background option"
+                    className="h-full w-full object-cover"
+                  />
+                  {image === option ? (
+                    <span className="absolute inset-0 bg-indigo-500/20" />
+                  ) : null}
+                </button>
+              ))}
+            </div>
+          </fieldset>
 
           {error ? (
             <p className="text-sm text-red-600" role="alert">

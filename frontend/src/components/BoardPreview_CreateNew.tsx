@@ -28,7 +28,7 @@ export default function BoardPreview_CreateNew() {
   return (
     <>
       <div
-        className="flex h-40 w-54 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-center shadow-md transition hover:bg-slate-50"
+        className="flex h-40 w-54 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-gray-100 text-center shadow-md transition hover:bg-gray-200 hover:shadow-xs"
         onClick={() => setOpen(true)}
         role="button"
         tabIndex={0}

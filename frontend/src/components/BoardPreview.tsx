@@ -3,7 +3,8 @@ import { Link } from "@tanstack/react-router";
 export interface BoardInfo {
   id: string;
   name: string;
-  imgSrc?: string;
+  description?: string | null;
+  image?: string | null;
 }
 
 interface BoardPreviewProps {
@@ -14,7 +15,9 @@ const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80";
 
 export default function BoardPreview({ board }: BoardPreviewProps) {
-  const { id, name, imgSrc } = board;
+  const { id, name, image } = board;
+
+  const low_res_image = image?.replace(".jpg", "_low.jpg");
 
   return (
     <Link to="/boards/$boardId" params={{ boardId: id }}>
@@ -23,7 +26,7 @@ export default function BoardPreview({ board }: BoardPreviewProps) {
           <div className="overflow-hidden ">
             <img
               className="h-24 w-full object-cover"
-              src={imgSrc ?? FALLBACK_IMAGE}
+              src={low_res_image ? `/${low_res_image}` : FALLBACK_IMAGE}
               alt={`${name}-board-preview`}
             />
           </div>
