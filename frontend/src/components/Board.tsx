@@ -10,91 +10,97 @@ interface BoardProps {
   };
 }
 
-const mockColumns = [
-  {
-    id: "column-1",
-    title: "Backlog",
-    cards: [
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-    ],
-  },
-  {
-    id: "column-2",
-    title: "In Progress",
-    cards: [
-      { id: "card-4", title: "Sprint planning" },
-      { id: "card-5", title: "Update style guide" },
-    ],
-  },
-  {
-    id: "column-3",
-    title: "Needs Review",
-    cards: [
-      { id: "card-6", title: "Board preview component" },
-      { id: "card-7", title: "Auth flow QA check" },
-    ],
-  },
-  {
-    id: "column-4",
-    title: "Done",
-    cards: [
-      { id: "card-8", title: "Set up FastAPI auth" },
-      { id: "card-9", title: "Initial Tailwind palette" },
-    ],
-  },
-  {
-    id: "column-5",
-    title: "Backlog",
-    cards: [
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-    ],
-  },
-  {
-    id: "column-6",
-    title: "Backlog",
-    cards: [
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-    ],
-  },
-  {
-    id: "column-7",
-    title: "Backlog",
-    cards: [
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-    ],
-  },
-  {
-    id: "column-8",
-    title: "Backlog",
-    cards: [
-      { id: "card-1", title: "Subscriber onboarding" },
-      { id: "card-2", title: "Marketing plan review" },
-      { id: "card-3", title: "Brand polish" },
-    ],
-  },
+interface Column {
+  id: string;
+  title: string;
+  cards: [];
+}
+
+const columns: [] = [
+  // {
+  //   id: "column-1",
+  //   title: "Backlog",
+  //   cards: [
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //   ],
+  // },
+  // {
+  //   id: "column-2",
+  //   title: "In Progress",
+  //   cards: [
+  //     { id: "card-4", title: "Sprint planning" },
+  //     { id: "card-5", title: "Update style guide" },
+  //   ],
+  // },
+  // {
+  //   id: "column-3",
+  //   title: "Needs Review",
+  //   cards: [
+  //     { id: "card-6", title: "Board preview component" },
+  //     { id: "card-7", title: "Auth flow QA check" },
+  //   ],
+  // },
+  // {
+  //   id: "column-4",
+  //   title: "Done",
+  //   cards: [
+  //     { id: "card-8", title: "Set up FastAPI auth" },
+  //     { id: "card-9", title: "Initial Tailwind palette" },
+  //   ],
+  // },
+  // {
+  //   id: "column-5",
+  //   title: "Backlog",
+  //   cards: [
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //   ],
+  // },
+  // {
+  //   id: "column-6",
+  //   title: "Backlog",
+  //   cards: [
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //   ],
+  // },
+  // {
+  //   id: "column-7",
+  //   title: "Backlog",
+  //   cards: [
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //   ],
+  // },
+  // {
+  //   id: "column-8",
+  //   title: "Backlog",
+  //   cards: [
+  //     { id: "card-1", title: "Subscriber onboarding" },
+  //     { id: "card-2", title: "Marketing plan review" },
+  //     { id: "card-3", title: "Brand polish" },
+  //   ],
+  // },
 ];
 
 export default function Board({ board }: BoardProps) {
@@ -135,9 +141,10 @@ export default function Board({ board }: BoardProps) {
         </div> */}
 
       <div className="fixed top-26 h-[97svh] w-full overflow-y-clip overflow-x-auto flex min-w-full gap-4 px-6 pb-6">
-        {mockColumns.map((column) => (
-          <Column key={column.id} title={column.title} cards={column.cards} />
-        ))}
+        {columns &&
+          columns?.map((column: Column) => (
+            <Column key={column.id} title={column.title} cards={column.cards} />
+          ))}
         <AddColumn />
       </div>
     </div>

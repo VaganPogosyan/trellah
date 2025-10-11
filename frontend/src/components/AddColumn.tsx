@@ -91,7 +91,7 @@ export default function AddColumn() {
           <button
             type="button"
             onClick={handleCancel}
-            className="cursor-pointer rounded-md bg-transparent px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-300 disabled:cursor-not-allowed"
+            className="cursor-pointer rounded-md bg-transparent px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-400 disabled:cursor-not-allowed"
             // disabled={mutation.isPending}
           >
             Cancel
@@ -109,11 +109,11 @@ export default function AddColumn() {
   return (
     <button
       type="button"
-      className="cursor-pointer flex h-fit w-72 shrink-0 rounded-xl bg-slate-200/80 px-3 py-4 text-left text-md text-slate-600 shadow-sm transition hover:bg-slate-300"
+      className="cursor-pointer flex h-12 w-72 shrink-0 rounded-xl bg-slate-200/80 items-center pl-4 text-md text-slate-600 shadow-sm transition hover:bg-slate-300"
       onClick={() => setAddingColumn(true)}
       // disabled={mutation.isPending}
     >
-      + Add another column
+      + Add Column
     </button>
   );
 }
