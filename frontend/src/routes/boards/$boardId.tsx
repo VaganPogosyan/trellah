@@ -14,6 +14,7 @@ type BoardData = {
   description: string | null;
   owner_id: string;
   created_at: string;
+  image: string | null;
 };
 
 export const Route = createFileRoute("/boards/$boardId")({

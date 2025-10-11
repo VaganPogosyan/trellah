@@ -1,7 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import BoardPreview, { type BoardInfo } from "./BoardPreview";
 import BoardPreview_CreateNew from "./BoardPreview_CreateNew";
 import Spinner from "./Spinner";
+import DeleteBoardModal from "./DeleteBoardModal";
 import { getAccessToken } from "../utils/auth";
 
 const API_BASE_URL =
@@ -9,6 +11,10 @@ const API_BASE_URL =
   "http://localhost:8000";
 
 export default function BoardsList() {
+  const queryClient = useQueryClient();
+  const [boardToDelete, setBoardToDelete] = useState<BoardInfo | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
   // const boards: BoardInfo[] = [
   //   {
   //     id: "design-sprint",
@@ -52,6 +58,35 @@ export default function BoardsList() {
     queryFn: fetchAllBoards,
   });
 
+  const deleteBoard = useMutation({
+    mutationFn: async (boardId: string) => {
+      const token = getAccessToken();
+      if (!token) {
+        throw new Error("You must be signed in to delete boards.");
+      }
+
+      const response = await fetch(`${API_BASE_URL}/boards/${boardId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const detail = await response.json().catch(() => null);
+        throw new Error(detail?.detail ?? "Failed to delete board.");
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["boards"] });
+      setBoardToDelete(null);
+      setDeleteError(null);
+    },
+    onError: (err: unknown) => {
+      setDeleteError(err instanceof Error ? err.message : "Failed to delete board.");
+    },
+  });
+
   if (isPending) {
     return (
       <div className="flex justify-center">
@@ -67,16 +102,22 @@ export default function BoardsList() {
   const boards = data as BoardInfo[];
 
   return (
-    <div className="mx-auto flex flex-col mt-20">
+    <div className="mx-auto mt-20 flex flex-col">
       <h1 className="pb-4 pl-24 text-2xl font-semibold text-slate-900">
         Your Boards
       </h1>
 
-      <div className=" flex ">
+      <div className="flex">
         <ul className="flex flex-wrap gap-4 pl-16">
-          {boards.map((board: BoardInfo) => (
+          {boards.map((board) => (
             <li key={board.id}>
-              <BoardPreview board={board} />
+              <BoardPreview
+                board={board}
+                onDelete={(selected) => {
+                  setBoardToDelete(selected);
+                  setDeleteError(null);
+                }}
+              />
             </li>
           ))}
           <li>
@@ -84,6 +125,24 @@ export default function BoardsList() {
           </li>
         </ul>
       </div>
+
+      <DeleteBoardModal
+        open={Boolean(boardToDelete)}
+        boardName={boardToDelete?.name ?? ""}
+        loading={deleteBoard.isPending}
+        error={deleteError}
+        onCancel={() => {
+          if (!deleteBoard.isPending) {
+            setBoardToDelete(null);
+            setDeleteError(null);
+          }
+        }}
+        onConfirm={() => {
+          if (boardToDelete) {
+            deleteBoard.mutate(boardToDelete.id);
+          }
+        }}
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 
@@ -201,3 +201,26 @@ def get_board_by_id(
         )
 
     return BoardRead.model_validate(board)
+
+
+@router.delete(
+    "/{board_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+def delete_board(
+    board_id: UUID,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> Response:
+    board = db.execute(
+        select(Board).where(Board.id == board_id, Board.owner_id == current_user.id)
+    ).scalar_one_or_none()
+    if not board:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Board not found.",
+        )
+
+    db.delete(board)
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

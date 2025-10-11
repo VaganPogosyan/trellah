@@ -105,6 +105,7 @@ export default function CreateNewBoardModal({
       onClose();
       setName("");
       setDescription("");
+      setImage(BACKGROUND_OPTIONS[0]);
       setError(null);
     }
   };
