@@ -102,12 +102,21 @@ def add_board_member(
     status_code=status.HTTP_201_CREATED,
 )
 def create_column(
-    board_id: UUID, payload: ColumnCreate, db: Session = Depends(get_db)
+    board_id: UUID,
+    payload: ColumnCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
 ) -> ColumnRead:
     board = db.get(Board, board_id)
     if not board:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Board not found."
+        )
+
+    if board.owner_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have permission to modify this board.",
         )
 
     position = payload.position
