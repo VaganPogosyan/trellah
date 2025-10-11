@@ -1,3 +1,4 @@
+import AddColumn from "./AddColumn";
 import Column from "./Column";
 
 interface BoardProps {
@@ -137,6 +138,7 @@ export default function Board({ board }: BoardProps) {
         {mockColumns.map((column) => (
           <Column key={column.id} title={column.title} cards={column.cards} />
         ))}
+        <AddColumn />
       </div>
     </div>
   );
